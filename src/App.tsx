@@ -9,6 +9,8 @@ function App() {
       </header>
       <div id={'break-label'}>Break Length</div>
       <div id={'session-label'}>Session Length</div>
+      <button id={'break-decrement'} />
+      <button id={'session-decrement'} />
     </div>
   );
 }
