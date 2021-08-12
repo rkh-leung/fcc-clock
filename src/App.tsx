@@ -11,6 +11,8 @@ function App() {
       <div id={'session-label'}>Session Length</div>
       <button id={'break-decrement'} />
       <button id={'session-decrement'} />
+      <button id={'break-increment'} />
+      <button id={'session-increment'} />
     </div>
   );
 }
