@@ -19,6 +19,7 @@ function App() {
       <button id={'session-increment'} />
       <div id={'break-length'}>{breakLength}</div>
       <div id={'session-length'}>{sessionLength}</div>
+      <div id={'timer-label'}>Session</div>
     </div>
   );
 }
