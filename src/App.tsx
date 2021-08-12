@@ -8,6 +8,7 @@ function App() {
         FCC 25+5 Clock
       </header>
       <div id={'break-label'}>Break Length</div>
+      <div id={'session-label'}>Session Length</div>
     </div>
   );
 }
