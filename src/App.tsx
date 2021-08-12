@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react'
 import './App.css';
 
 function App() {
+  const initialState: number = 5
+  const [breakLength, setBreakLength] = useState(initialState)
   return (
     <div className="App">
       <header className="App-header">
@@ -13,6 +15,7 @@ function App() {
       <button id={'session-decrement'} />
       <button id={'break-increment'} />
       <button id={'session-increment'} />
+      <div id={'break-length'}>{breakLength}</div>
     </div>
   );
 }
