@@ -7,6 +7,7 @@ function App() {
       <header className="App-header">
         FCC 25+5 Clock
       </header>
+      <div id={'break-label'}>Break Length</div>
     </div>
   );
 }
