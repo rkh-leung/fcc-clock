@@ -42,6 +42,9 @@ function App() {
         {minute < 10 ? `0${minute}` : minute}:
         {second % 60 < 10 ? `0${second % 60}` : second % 60}
       </div>
+      <div id={'control'}>
+        <i className={'fas fa-pause'} id={'start_stop'} />
+      </div>
     </div>
   )
 }
