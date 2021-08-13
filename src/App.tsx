@@ -79,10 +79,10 @@ function App() {
       </div>
       <div id={'control'}>
         {status ? (
-          <button className='fas fa-play' onClick={statusToggle} />
+          <button className='fas fa-pause' onClick={statusToggle} />
         ) : (
           <button
-            className={'fas fa-pause'}
+            className={'fas fa-play'}
             id={'start_stop'}
             onClick={statusToggle}
           />
