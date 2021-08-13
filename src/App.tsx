@@ -12,16 +12,15 @@ function App() {
 
   let minute: number = Math.floor(second / 60)
 
-  const sessionHandler = (counter: number) => {
+  const incSession = (counter: number) =>
     setSecond((prevState) => prevState + counter)
-  }
-
-  const breakHandler = (counter: number) => {
+  const decSession = (counter: number) =>
+    setSecond((prevState) => (prevState == 1 ? 1 : prevState + counter))
+  const incBreak = (counter: number) =>
     setBreakLength((prevState) => prevState + counter)
-  }
-
+  const decBreak = (counter: number) =>
+    setBreakLength((prevState) => (prevState == 1 ? 1 : prevState + counter))
   const statusToggle = () => setStatus((prevState) => !prevState)
-
   const resetHandler = () => {
     setBreakLength((prevState) => (prevState = breakState))
     setSecond((prevState) => (prevState = sessionState))
@@ -35,25 +34,25 @@ function App() {
       <i
         className={'fa fa-arrow-down'}
         id={'break-decrement'}
-        onClick={() => breakHandler(-1)}
+        onClick={() => decBreak(-1)}
       />
       <span id={'break-length'}>{breakLength}</span>
       <i
         className={'fa fa-arrow-up'}
         id={'break-increment'}
-        onClick={() => breakHandler(1)}
+        onClick={() => incBreak(1)}
       />
       <div id={'session-label'}>Session Length</div>
       <i
         className={'fa fa-arrow-down'}
         id={'session-decrement'}
-        onClick={() => sessionHandler(-60)}
+        onClick={() => decSession(-60)}
       />
-      <span id={'session-length'}>{minute}</span>
+      <span id={'session-length'}>{minute % 60}</span>
       <i
         className={'fa fa-arrow-up'}
         id={'session-increment'}
-        onClick={() => sessionHandler(60)}
+        onClick={() => incSession(60)}
       />
       <div id={'timer-label'}>Session</div>
       <div id={'time-left'}>
