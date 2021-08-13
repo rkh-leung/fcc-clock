@@ -4,9 +4,11 @@ import './App.css'
 function App() {
   let breakState: number = 5
   let sessionState: number = 1500
+  let sessionStatus: boolean = false
 
   const [breakLength, setBreakLength] = useState(breakState)
   const [second, setSecond] = useState(sessionState)
+  const [status, setStatus] = useState(sessionStatus)
 
   let minute: number = Math.floor(second / 60)
 
@@ -14,22 +16,33 @@ function App() {
     setSecond((prevState) => prevState + counter)
   }
 
+  const breakHandler = (counter: number) => {
+    setBreakLength((prevState) => prevState + counter)
+  }
+
+  const statusToggle = () => setStatus((prevState) => !prevState)
+
   const resetHandler = () => {
-    setBreakLength(prevState => prevState = breakState)
-    setSecond(prevState => prevState = sessionState)
+    setBreakLength((prevState) => (prevState = breakState))
+    setSecond((prevState) => (prevState = sessionState))
+    setStatus((prevState) => (prevState = sessionStatus))
   }
 
   return (
     <div className='App'>
       <header className='App-header'>FCC 25+5 Clock</header>
       <div id={'break-label'}>Break Length</div>
-      <button id={'break-decrement'}>
-        <i className={'fa fa-arrow-down'} />
-      </button>
-      <button id={'break-increment'}>
-        <i className={'fa fa-arrow-up'} />
-      </button>
-      <div id={'break-length'}>{breakLength}</div>
+      <i
+        className={'fa fa-arrow-down'}
+        id={'break-decrement'}
+        onClick={() => breakHandler(-1)}
+      />
+      <span id={'break-length'}>{breakLength}</span>
+      <i
+        className={'fa fa-arrow-up'}
+        id={'break-increment'}
+        onClick={() => breakHandler(1)}
+      />
       <div id={'session-label'}>Session Length</div>
       <i
         className={'fa fa-arrow-down'}
@@ -48,8 +61,16 @@ function App() {
         {second % 60 < 10 ? `0${second % 60}` : second % 60}
       </div>
       <div id={'control'}>
-        <i className={'fas fa-pause'} id={'start_stop'} />
-        <i className={'fas fa-redo'} id={'reset'} onClick={resetHandler}/>
+        {status ? (
+          <i className='fas fa-play' onClick={statusToggle} />
+        ) : (
+          <i
+            className={'fas fa-pause'}
+            id={'start_stop'}
+            onClick={statusToggle}
+          />
+        )}
+        <i className={'fas fa-redo'} id={'reset'} onClick={resetHandler} />
       </div>
     </div>
   )
