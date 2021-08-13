@@ -3,27 +3,41 @@ import './App.css'
 
 function App() {
   let breakState: number = 5
-  let sessionState: number = 1500
+  let sessionState: number = 25
+  let initSession: number = 1500
   let sessionStatus: boolean = false
 
   const [breakLength, setBreakLength] = useState(breakState)
-  const [second, setSecond] = useState(sessionState)
+  const [sessionLength, setSessionLength] = useState(sessionState)
+  const [second, setSecond] = useState(initSession)
   const [status, setStatus] = useState(sessionStatus)
 
   let minute: number = Math.floor(second / 60)
 
-  const incSession = (counter: number) =>
-    setSecond((prevState) => prevState + counter)
-  const decSession = (counter: number) =>
-    setSecond((prevState) => (prevState == 1 ? 1 : prevState + counter))
-  const incBreak = (counter: number) =>
-    setBreakLength((prevState) => prevState + counter)
-  const decBreak = (counter: number) =>
-    setBreakLength((prevState) => (prevState == 1 ? 1 : prevState + counter))
+  const sessionHandler = (e: React.BaseSyntheticEvent) =>
+    setSessionLength((prevState) =>
+      prevState <= 2
+        ? 1
+        : prevState > 2 && prevState < 60
+        ? prevState + Number(e.target.value)
+        : 60
+    )
+
+  const breakHandler = (e: React.BaseSyntheticEvent) =>
+    setBreakLength((prevState) =>
+      prevState <= 2
+        ? 1
+        : prevState > 2 && prevState < 60
+        ? prevState + Number(e.target.value)
+        : 60
+    )
+
   const statusToggle = () => setStatus((prevState) => !prevState)
+
   const resetHandler = () => {
     setBreakLength((prevState) => (prevState = breakState))
-    setSecond((prevState) => (prevState = sessionState))
+    setSessionLength((prevState) => (prevState = sessionState))
+    setSecond((prevState) => (prevState = initSession))
     setStatus((prevState) => (prevState = sessionStatus))
   }
 
@@ -31,28 +45,32 @@ function App() {
     <div className='App'>
       <header className='App-header'>FCC 25+5 Clock</header>
       <div id={'break-label'}>Break Length</div>
-      <i
+      <button
         className={'fa fa-arrow-down'}
         id={'break-decrement'}
-        onClick={() => decBreak(-1)}
+        onClick={breakHandler}
+        value={-1}
       />
       <span id={'break-length'}>{breakLength}</span>
-      <i
+      <button
         className={'fa fa-arrow-up'}
         id={'break-increment'}
-        onClick={() => incBreak(1)}
+        onClick={breakHandler}
+        value={1}
       />
       <div id={'session-label'}>Session Length</div>
-      <i
+      <button
         className={'fa fa-arrow-down'}
         id={'session-decrement'}
-        onClick={() => decSession(-60)}
+        onClick={sessionHandler}
+        value={-1}
       />
-      <span id={'session-length'}>{minute % 60}</span>
-      <i
+      <span id={'session-length'}>{sessionLength}</span>
+      <button
         className={'fa fa-arrow-up'}
         id={'session-increment'}
-        onClick={() => incSession(60)}
+        onClick={sessionHandler}
+        value={1}
       />
       <div id={'timer-label'}>Session</div>
       <div id={'time-left'}>
@@ -61,15 +79,15 @@ function App() {
       </div>
       <div id={'control'}>
         {status ? (
-          <i className='fas fa-play' onClick={statusToggle} />
+          <button className='fas fa-play' onClick={statusToggle} />
         ) : (
-          <i
+          <button
             className={'fas fa-pause'}
             id={'start_stop'}
             onClick={statusToggle}
           />
         )}
-        <i className={'fas fa-redo'} id={'reset'} onClick={resetHandler} />
+        <button className={'fas fa-redo'} id={'reset'} onClick={resetHandler} />
       </div>
     </div>
   )
