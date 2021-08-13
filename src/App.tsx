@@ -14,6 +14,11 @@ function App() {
     setSecond((prevState) => prevState + counter)
   }
 
+  const resetHandler = () => {
+    setBreakLength(prevState => prevState = breakState)
+    setSecond(prevState => prevState = sessionState)
+  }
+
   return (
     <div className='App'>
       <header className='App-header'>FCC 25+5 Clock</header>
@@ -44,7 +49,7 @@ function App() {
       </div>
       <div id={'control'}>
         <i className={'fas fa-pause'} id={'start_stop'} />
-        <i className={'fa fa-refresh'} id={'reset'} />
+        <i className={'fas fa-redo'} id={'reset'} onClick={resetHandler}/>
       </div>
     </div>
   )
