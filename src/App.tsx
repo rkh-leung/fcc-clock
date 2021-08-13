@@ -44,6 +44,7 @@ function App() {
       </div>
       <div id={'control'}>
         <i className={'fas fa-pause'} id={'start_stop'} />
+        <i className={'fa fa-refresh'} id={'reset'} />
       </div>
     </div>
   )
