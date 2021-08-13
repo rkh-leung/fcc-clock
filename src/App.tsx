@@ -12,22 +12,18 @@ function App() {
 
   let seconds: number = Math.floor(sessionLength * 60)
 
+  const increment = (prevState: number, e: React.BaseSyntheticEvent) =>
+    prevState < 60 ? prevState + Number(e.target.value) : 60
+  const decrement = (prevState: number, e: React.BaseSyntheticEvent) =>
+    prevState <= 2 ? 1 : prevState + Number(e.target.value)
   const sessionInc = (e: React.BaseSyntheticEvent) =>
-    setSessionLength((prevState) =>
-      prevState < 60 ? prevState + Number(e.target.value) : 60
-    )
+    setSessionLength((prevState) => increment(prevState, e))
   const sessionDec = (e: React.BaseSyntheticEvent) =>
-    setSessionLength((prevState) =>
-      prevState <= 2 ? 1 : prevState + Number(e.target.value)
-    )
+    setSessionLength((prevState) => decrement(prevState, e))
   const breakInc = (e: React.BaseSyntheticEvent) =>
-    setBreakLength((prevState) =>
-      prevState < 60 ? prevState + Number(e.target.value) : 60
-    )
+    setBreakLength((prevState) => increment(prevState, e))
   const breakDec = (e: React.BaseSyntheticEvent) =>
-    setBreakLength((prevState) =>
-      prevState <= 2 ? 1 : prevState + Number(e.target.value)
-    )
+    setBreakLength((prevState) => decrement(prevState, e))
   const statusToggle = () => setStatus((prevState) => !prevState)
   const resetHandler = () => {
     setBreakLength((prevState) => (prevState = breakState))
