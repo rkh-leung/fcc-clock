@@ -4,40 +4,34 @@ import './App.css'
 function App() {
   let breakState: number = 5
   let sessionState: number = 25
-  let initSession: number = 1500
   let sessionStatus: boolean = false
 
   const [breakLength, setBreakLength] = useState(breakState)
   const [sessionLength, setSessionLength] = useState(sessionState)
-  const [second, setSecond] = useState(initSession)
   const [status, setStatus] = useState(sessionStatus)
 
-  let minute: number = Math.floor(second / 60)
+  let seconds: number = Math.floor(sessionLength * 60)
 
-  const sessionHandler = (e: React.BaseSyntheticEvent) =>
+  const sessionInc = (e: React.BaseSyntheticEvent) =>
     setSessionLength((prevState) =>
-      prevState <= 2
-        ? 1
-        : prevState > 2 && prevState < 60
-        ? prevState + Number(e.target.value)
-        : 60
+      prevState < 60 ? prevState + Number(e.target.value) : 60
     )
-
-  const breakHandler = (e: React.BaseSyntheticEvent) =>
+  const sessionDec = (e: React.BaseSyntheticEvent) =>
+    setSessionLength((prevState) =>
+      prevState <= 2 ? 1 : prevState + Number(e.target.value)
+    )
+  const breakInc = (e: React.BaseSyntheticEvent) =>
     setBreakLength((prevState) =>
-      prevState <= 2
-        ? 1
-        : prevState > 2 && prevState < 60
-        ? prevState + Number(e.target.value)
-        : 60
+      prevState < 60 ? prevState + Number(e.target.value) : 60
     )
-
+  const breakDec = (e: React.BaseSyntheticEvent) =>
+    setBreakLength((prevState) =>
+      prevState <= 2 ? 1 : prevState + Number(e.target.value)
+    )
   const statusToggle = () => setStatus((prevState) => !prevState)
-
   const resetHandler = () => {
     setBreakLength((prevState) => (prevState = breakState))
     setSessionLength((prevState) => (prevState = sessionState))
-    setSecond((prevState) => (prevState = initSession))
     setStatus((prevState) => (prevState = sessionStatus))
   }
 
@@ -48,34 +42,34 @@ function App() {
       <button
         className={'fa fa-arrow-down'}
         id={'break-decrement'}
-        onClick={breakHandler}
+        onClick={breakDec}
         value={-1}
       />
       <span id={'break-length'}>{breakLength}</span>
       <button
         className={'fa fa-arrow-up'}
         id={'break-increment'}
-        onClick={breakHandler}
+        onClick={breakInc}
         value={1}
       />
       <div id={'session-label'}>Session Length</div>
       <button
         className={'fa fa-arrow-down'}
         id={'session-decrement'}
-        onClick={sessionHandler}
+        onClick={sessionDec}
         value={-1}
       />
       <span id={'session-length'}>{sessionLength}</span>
       <button
         className={'fa fa-arrow-up'}
         id={'session-increment'}
-        onClick={sessionHandler}
+        onClick={sessionInc}
         value={1}
       />
       <div id={'timer-label'}>Session</div>
       <div id={'time-left'}>
-        {minute < 10 ? `0${minute}` : minute}:
-        {second % 60 < 10 ? `0${second % 60}` : second % 60}
+        {sessionLength < 10 ? `0${sessionLength}` : sessionLength}:
+        {seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60}
       </div>
       <div id={'control'}>
         {status ? (
