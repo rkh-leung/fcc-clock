@@ -26,9 +26,9 @@ function App() {
     setBreakLength((prevState) => decrement(prevState, e))
   const statusToggle = () => setStatus((prevState) => !prevState)
   const resetHandler = () => {
-    setBreakLength((prevState) => (prevState = breakState))
-    setSessionLength((prevState) => (prevState = sessionState))
-    setStatus((prevState) => (prevState = sessionStatus))
+    setBreakLength(() => breakState)
+    setSessionLength(() => sessionState)
+    setStatus(() => sessionStatus)
   }
 
   return (
