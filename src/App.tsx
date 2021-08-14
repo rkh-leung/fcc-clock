@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import './App.css'
+import { setInterval } from 'timers'
 
 function App() {
-  let breakState: number = 5
-  let sessionState: number = 25
-  let sessionStatus: boolean = false
+  let initBreak: number = 5
+  let initSession: number = 25
+  let initTimer: number = initSession * 60
+  let initStatus: boolean = false
 
-  const [breakLength, setBreakLength] = useState(breakState)
-  const [sessionLength, setSessionLength] = useState(sessionState)
-  const [status, setStatus] = useState(sessionStatus)
-
-  let seconds: number = Math.floor(sessionLength * 60)
+  const [breakLength, setBreakLength] = useState(initBreak)
+  const [sessionLength, setSessionLength] = useState(initSession)
+  const [timer, setTimer] = useState(initTimer)
+  const [status, setStatus] = useState(initStatus)
 
   const increment = (prevState: number, e: React.BaseSyntheticEvent) =>
     prevState < 60 ? prevState + Number(e.target.value) : 60
@@ -24,11 +25,23 @@ function App() {
     setBreakLength((prevState) => increment(prevState, e))
   const breakDec = (e: React.BaseSyntheticEvent) =>
     setBreakLength((prevState) => decrement(prevState, e))
-  const statusToggle = () => setStatus((prevState) => !prevState)
   const resetHandler = () => {
-    setBreakLength(() => breakState)
-    setSessionLength(() => sessionState)
-    setStatus(() => sessionStatus)
+    setBreakLength(() => initBreak)
+    setSessionLength(() => initSession)
+    setStatus(() => initStatus)
+  }
+  const timerToggle = (status: boolean) => {
+    let timerId = setInterval(
+      () => setSessionLength((prevState) => prevState - 1 / 60),
+      1000
+    )
+    if (status === false) {
+      clearInterval(timerId)
+    }
+  }
+  const statusToggle = () => {
+    setStatus((prevState) => !prevState)
+    timerToggle(status)
   }
 
   return (
@@ -63,9 +76,9 @@ function App() {
         value={1}
       />
       <div id={'timer-label'}>Session</div>
-      <div id={'time-left'}>
+      <div id={'time-left'}> {/* mm/ss */}
         {sessionLength < 10 ? `0${sessionLength}` : sessionLength}:
-        {seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60}
+        {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
       </div>
       <div id={'control'}>
         {status ? (
