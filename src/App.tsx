@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
-import { setInterval } from 'timers'
 
 function App() {
+  // Type StatusType = 'stop' | 'running' | 'pause'
   let initBreak: number = 5
   let initSession: number = 25
-  let initTimer: number = initSession * 60
   let initStatus: boolean = false
+  // let initType: StatusType = 'stop'
 
   const [breakLength, setBreakLength] = useState(initBreak)
   const [sessionLength, setSessionLength] = useState(initSession)
-  const [timer, setTimer] = useState(initTimer)
+  const [timer, setTimer] = useState(sessionLength * 60)
   const [status, setStatus] = useState(initStatus)
 
   const increment = (prevState: number, e: React.BaseSyntheticEvent) =>
@@ -28,22 +28,24 @@ function App() {
   const resetHandler = () => {
     setBreakLength(() => initBreak)
     setSessionLength(() => initSession)
+    setTimer(() => sessionLength * 60)
     setStatus(() => initStatus)
   }
-  const timerToggle = (status: boolean) => {
-    let timerId = setInterval(
-      () => setSessionLength((prevState) => prevState - 1 / 60),
-      1000
-    )
-    if (status === false) {
-      clearInterval(timerId)
-    }
-  }
-  const statusToggle = () => {
-    setStatus((prevState) => !prevState)
-    timerToggle(status)
-  }
+  const statusToggle = () => setStatus((prevState) => !prevState)
 
+  useEffect(() => {
+    let timerId: number
+    // setTimer(() => sessionLength * 60)
+    if (status) {
+      timerId = window.setInterval(
+        () => setTimer((prevState) => prevState - 1),
+        1000
+      )
+    }
+    return () => {
+      window.clearInterval(timerId)
+    }
+  }, [status])
   return (
     <div className='App'>
       <header className='App-header'>FCC 25+5 Clock</header>
@@ -76,9 +78,12 @@ function App() {
         value={1}
       />
       <div id={'timer-label'}>Session</div>
-      <div id={'time-left'}> {/* mm/ss */}
+      <div id={'time-left'}>
         {sessionLength < 10 ? `0${sessionLength}` : sessionLength}:
         {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
+        {console.log('timer', timer)}
+        {console.log('sessionLength', sessionLength)}
+        {console.log('status', status)}
       </div>
       <div id={'control'}>
         {status ? (
