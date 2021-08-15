@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  // Type StatusType = 'stop' | 'running' | 'pause'
   let initBreak: number = 5
   let initSession: number = 25
   let initStatus: boolean = false
-  // let initType: StatusType = 'stop'
+  let initType: string = 'stop'
 
   const [breakLength, setBreakLength] = useState(initBreak)
   const [sessionLength, setSessionLength] = useState(initSession)
   const [timer, setTimer] = useState(sessionLength * 60)
   const [status, setStatus] = useState(initStatus)
+  const [process, setProcess] = useState(initType)
 
   const increment = (prevState: number, e: React.BaseSyntheticEvent) =>
     prevState < 60 ? prevState + Number(e.target.value) : 60
@@ -30,12 +30,19 @@ function App() {
     setSessionLength(() => initSession)
     setTimer(() => sessionLength * 60)
     setStatus(() => initStatus)
+    setProcess(() => initType)
   }
-  const statusToggle = () => setStatus((prevState) => !prevState)
+  const startBtn = () => {
+    if (process === 'stop') setTimer(() => sessionLength * 60)
+    setStatus(() => true)
+    setProcess(() => 'running')
+  }
 
+  const pauseBtn = () => {
+    setStatus(() => false)
+  }
   useEffect(() => {
     let timerId: number
-    // setTimer(() => sessionLength * 60)
     if (status) {
       timerId = window.setInterval(
         () => setTimer((prevState) => prevState - 1),
@@ -84,17 +91,15 @@ function App() {
         {console.log('timer', timer)}
         {console.log('sessionLength', sessionLength)}
         {console.log('status', status)}
+        {console.log('process', process)}
       </div>
       <div id={'control'}>
-        {status ? (
-          <button className='fas fa-pause' onClick={statusToggle} />
-        ) : (
-          <button
-            className={'fas fa-play'}
-            id={'start_stop'}
-            onClick={statusToggle}
-          />
-        )}
+        <button
+          className={'fas fa-play'}
+          id={'start_stop'}
+          onClick={startBtn}
+        />
+        <button className='fas fa-pause' onClick={pauseBtn} />
         <button className={'fas fa-redo'} id={'reset'} onClick={resetHandler} />
       </div>
     </div>
