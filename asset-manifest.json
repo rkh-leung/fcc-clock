@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/fcc-clock/static/css/main.8c0a03e4.chunk.css",
+    "main.js": "/fcc-clock/static/js/main.0350e3e6.chunk.js",
+    "main.js.map": "/fcc-clock/static/js/main.0350e3e6.chunk.js.map",
+    "runtime-main.js": "/fcc-clock/static/js/runtime-main.8a94e95f.js",
+    "runtime-main.js.map": "/fcc-clock/static/js/runtime-main.8a94e95f.js.map",
+    "static/js/2.5b988a85.chunk.js": "/fcc-clock/static/js/2.5b988a85.chunk.js",
+    "static/js/2.5b988a85.chunk.js.map": "/fcc-clock/static/js/2.5b988a85.chunk.js.map",
+    "static/js/3.6553630d.chunk.js": "/fcc-clock/static/js/3.6553630d.chunk.js",
+    "static/js/3.6553630d.chunk.js.map": "/fcc-clock/static/js/3.6553630d.chunk.js.map",
+    "index.html": "/fcc-clock/index.html",
+    "static/css/main.8c0a03e4.chunk.css.map": "/fcc-clock/static/css/main.8c0a03e4.chunk.css.map",
+    "static/js/2.5b988a85.chunk.js.LICENSE.txt": "/fcc-clock/static/js/2.5b988a85.chunk.js.LICENSE.txt",
+    "static/media/data-scaner.f5aeae94.wav": "/fcc-clock/static/media/data-scaner.f5aeae94.wav"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8a94e95f.js",
+    "static/js/2.5b988a85.chunk.js",
+    "static/css/main.8c0a03e4.chunk.css",
+    "static/js/main.0350e3e6.chunk.js"
+  ]
+}
